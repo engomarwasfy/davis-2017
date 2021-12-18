@@ -92,22 +92,25 @@ def db_read_years():
 	return db_read_info().years
 
 def db_read_sequences(year=None,db_phase=None):
-  """ Read list of sequences. """
+    """ Read list of sequences. """
 
-  sequences = db_read_info().sequences
+    sequences = db_read_info().sequences
 
-  if year is not None:
-    sequences = filter(
-        lambda s:int(s.year) <= int(year),sequences)
-
-  if db_phase is not None:
-    if db_phase == phase.TRAINVAL:
+    if year is not None:
       sequences = filter(
-          lambda s: ((s.set == phase.VAL.value) or (s.set == phase.TRAIN.value)), sequences)
-    else:
-      sequences = filter(
-          lambda s:s.set == db_phase.value,sequences)
-  return sequences
+          lambda s:int(s.year) <= int(year),sequences)
+
+    if db_phase is not None:
+        if db_phase == phase.TRAINVAL:
+            sequences = filter(
+                lambda s: s.set in [phase.VAL.value, phase.TRAIN.value],
+                sequences,
+            )
+
+        else:
+            sequences = filter(
+                lambda s:s.set == db_phase.value,sequences)
+    return sequences
 
 # Load all sequences
 __C.SEQUENCES = dict([(sequence.name,sequence) for sequence in

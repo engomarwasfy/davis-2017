@@ -22,7 +22,7 @@ def decay(X,n_bins=4):
   ids = np.round(np.linspace(1,len(X),n_bins+1)+1e-10)-1;
   ids = ids.astype(np.uint8)
 
-  D_bins = [X[ids[i]:ids[i+1]+1] for i in range(0,4)]
+  D_bins = [X[ids[i]:ids[i+1]+1] for i in range(4)]
 
   with warnings.catch_warnings():
     warnings.simplefilter("ignore", category=RuntimeWarning)
