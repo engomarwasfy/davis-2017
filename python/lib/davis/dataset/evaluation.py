@@ -83,13 +83,11 @@ def db_eval(db,segmentations,measures,n_jobs=cfg.N_JOBS,verbose=True):
           db[sg.name].annotations,measure=measure,n_jobs=n_jobs)
 
     for statistic in cfg.EVAL.STATISTICS:
-      raw_data = np.hstack([s_eval[sequence][measure][statistic] for sequence in
-        s_eval.keys()])
+      raw_data = np.hstack(
+          [s_eval[sequence][measure][statistic] for sequence in s_eval])
       d_eval[measure][statistic] = float(np.mean(raw_data))
 
-  g_eval = {'sequence':dict(s_eval),'dataset':dict(d_eval)}
-
-  return g_eval
+  return {'sequence':dict(s_eval),'dataset':dict(d_eval)}
 
 def print_results(evaluation,method_name="-"):
   """Print result in a table"""

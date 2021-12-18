@@ -41,9 +41,7 @@ def hist_cost_2(BH1,BH2):
 
 	tmp1 = np.tile(np.transpose(np.atleast_3d(BH1n),[0,2,1]),(1,nsamp2,1))
 	tmp2 = np.tile(np.transpose(np.atleast_3d(BH2n.T),[2,1,0]),(nsamp1,1,1))
-	HC = 0.5*np.sum((tmp1-tmp2)**2/(tmp1+tmp2+eps),axis=2)
-
-	return HC
+	return 0.5*np.sum((tmp1-tmp2)**2/(tmp1+tmp2+eps),axis=2)
 
 def sc_compute(Bsamp,Tsamp,mean_dist,nbins_theta,nbins_r,r_inner,r_outer,out_vec):
 	in_vec = (out_vec==0).ravel()
@@ -157,6 +155,4 @@ def db_eval_t_stab(fgmask,ground_truth,timing=True):
 	pairs = get_bijective_pairs(pairs,costmat)
 
 	pairs_cost = costmat[pairs[:,0], pairs[:,1]]
-	min_cost   = np.average(pairs_cost)
-
-	return min_cost
+	return np.average(pairs_cost)

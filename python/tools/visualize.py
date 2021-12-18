@@ -54,8 +54,7 @@ def imshow(im,an,color_palette):
   ov = overlay(im,an,color_palette)
   cv2.imshow("Sequence",ov[...,[2,1,0]])
 
-  ch = chr(cv2.waitKey())
-  return ch
+  return chr(cv2.waitKey())
 
 if __name__ == '__main__':
 

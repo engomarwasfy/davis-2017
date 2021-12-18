@@ -53,14 +53,16 @@ class DAVISLoader(object):
     self._phase = phase
     self._single_object = single_object
 
-    assert year == "2017" or year == "2016"
+    assert year in ["2017", "2016"]
 
     # check the phase
-    if year == '2016':
-      if not (self._phase == phase.TRAIN or self._phase == phase.VAL or \
-          self._phase == phase.TRAINVAL):
-            raise Exception("Set \'{}\' not available in DAVIS 2016 ({},{},{})".format(
-              self._phase.name,phase.TRAIN.name,phase.VAL.name,phase.TRAINVAL.name))
+    if year == '2016' and not self._phase in [
+        phase.TRAIN,
+        phase.VAL,
+        phase.TRAINVAL,
+    ]:
+      raise Exception("Set \'{}\' not available in DAVIS 2016 ({},{},{})".format(
+        self._phase.name,phase.TRAIN.name,phase.VAL.name,phase.TRAINVAL.name))
 
     # Check single_object if False iif year is 2016
     if self._single_object and self._year != "2016":
@@ -85,11 +87,8 @@ class DAVISLoader(object):
 
     # Check number of annotations is correct
     for annotation,db_sequence in zip(self.sequences,self._db_sequences):
-      if (self._phase == phase.TRAIN) or (self._phase == phase.VAL):
+      if self._phase in [phase.TRAIN, phase.VAL]:
         assert len(annotation) == db_sequence.num_frames
-      elif self._phase == phase.TESTDEV:
-        pass
-
     try:
       self.color_palette = np.array(Image.open(
         self.annotations[0].files[0]).getpalette()).reshape(-1,3)
@@ -102,8 +101,7 @@ class DAVISLoader(object):
 
   def __iter__(self):
     """ Iteratator over pairs of (sequence,annotation)."""
-    for sequence,annotation in zip(self.sequences,self.annotations):
-      yield sequence,annotation
+    yield from zip(self.sequences,self.annotations)
 
   def __getitem__(self, key):
     """ Get sequences and annotations pairs."""

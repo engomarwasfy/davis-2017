@@ -68,8 +68,8 @@ class BaseLoader(ImageCollection):
     self.name = osp.basename(path)
 
     # Check sequence name
-    if not self.name in cfg.SEQUENCES:
-        raise Exception("Sequence name \'{}\' not found.".format(self.name))
+    if self.name not in cfg.SEQUENCES:
+      raise Exception("Sequence name \'{}\' not found.".format(self.name))
 
     # Check sequence length
     if cfg.PHASE != phase.TESTDEV and len(self) != cfg.SEQUENCES[self.name].num_frames:
@@ -130,8 +130,7 @@ class Segmentation(BaseLoader):
     """
     Iterate over objects providing object id for each of them.
     """
-    for obj_id in range(1,self.n_objects+1):
-      yield obj_id
+    yield from range(1,self.n_objects+1)
 
   def iter_objects(self):
     """

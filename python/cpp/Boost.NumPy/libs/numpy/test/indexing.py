@@ -13,7 +13,7 @@ class TestIndexing(unittest.TestCase):
 
     def testSingle(self):
         x = numpy.arange(0,10)
-        for i in range(0,10):
+        for i in range(10):
             numpy.testing.assert_equal(indexing_mod.single(x,i), i)
         for i in range(-10,0):
             numpy.testing.assert_equal(indexing_mod.single(x,i),10+i)

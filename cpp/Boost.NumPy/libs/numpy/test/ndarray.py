@@ -32,7 +32,7 @@ class TestNdarray(unittest.TestCase):
             self.assertEqual(type(a1), type(a2))
 
     def testNdarray(self):    
-        a = range(0,60)
+        a = range(60)
         for dtp in (numpy.int16, numpy.int32, numpy.float32, numpy.complex128):
             v = numpy.array(a, dtype=dtp)
             dt = numpy.dtype(dtp)

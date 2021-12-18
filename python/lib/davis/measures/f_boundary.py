@@ -62,13 +62,7 @@ def db_eval_boundary(foreground_mask,gt_mask,bound_th=0.008):
 		precision = np.sum(fg_match)/float(n_fg)
 		recall    = np.sum(gt_match)/float(n_gt)
 
-	# Compute F measure
-	if precision + recall == 0:
-		F = 0
-	else:
-		F = 2*precision*recall/(precision+recall);
-
-	return F
+	return 0 if precision + recall == 0 else 2*precision*recall/(precision+recall)
 
 def seg2bmap(seg,width=None,height=None):
 	"""

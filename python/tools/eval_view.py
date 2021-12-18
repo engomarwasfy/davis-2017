@@ -35,9 +35,7 @@ def parse_args():
       '-i','--input',required=True,type=str,
       help='Path to the technique results (yaml)')
 
-  args = parser.parse_args()
-
-  return args
+  return parser.parse_args()
 
 if __name__ == '__main__':
 
